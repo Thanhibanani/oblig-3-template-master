@@ -210,7 +210,7 @@ public class SBinTre<T> {
 
         p= førstePostorden(p);
 
-        while(stop !=0;){
+        while(stop !=0){
             if(p != null){
                 fjern(p.verdi);
             }
@@ -239,19 +239,45 @@ public class SBinTre<T> {
     }
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
+        Node<T> f = p.forelder; //Initialiserer f som p.forelder.
+        if (f == null) {
+            return null; //Dersom forelderen er null, altså det ikke er noenestePostorden.
+        }
+        if (f.høyre == p || f.høyre == null) {
+            return f; //Returnerer forelder dersom høyrebarn er verdien p,eller at det er tomt.
+        } else {
+            return førstePostorden(f.høyre); //kaller på førstePostordensom ordner det ellers
+        }
+
 
     }
 
     public void postorden(Oppgave<? super T> oppgave) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        Node<T> p = rot;
+        Node<T> først = førstePostorden(p);
+        oppgave.utførOppgave(først.verdi);
+
+        while (først.forelder != null){
+            først=nestePostorden(først);
+            oppgave.utførOppgave(Objects.requireNonNull(først).verdi);
+        }
+
     }
 
     public void postordenRecursive(Oppgave<? super T> oppgave) {
-        postordenRecursive(rot, oppgave);
+        if (!tom()){
+            postordenRecursive(rot,oppgave);
+        }
     }
 
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        if(p==null){
+            return;
+        }
+
+        postordenRecursive(p.venstre,oppgave);
+        postordenRecursive(p.høyre,oppgave);
+        oppgave.utførOppgave(p.verdi);
     }
 
     public ArrayList<T> serialize() {
