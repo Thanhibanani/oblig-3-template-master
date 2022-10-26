@@ -46,7 +46,7 @@ public class SBinTre<T> {
         comp = c;
     }
 
-    public boolean inneholder(T verdi) {
+    public boolean inneholder(T verdi) { //oppgave 2 ferdigkodet
         if (verdi == null) return false;
 
         Node<T> p = rot;
@@ -61,7 +61,7 @@ public class SBinTre<T> {
         return false;
     }
 
-    public int antall() {
+    public int antall() { //oppgave 2 ferdigkodet.
         return antall;
     }
 
@@ -79,7 +79,7 @@ public class SBinTre<T> {
         return s.toString();
     }
 
-    public boolean tom() {
+    public boolean tom() { //oppgave 2 ferdigkodet
         return antall == 0;
     }
 
@@ -108,81 +108,18 @@ public class SBinTre<T> {
         return true;
 
     }
+
+    //Oppgave 6
     public boolean fjern(T verdi) {
-
-        if(verdi==null) return false; //treet har ingen nullverdier
-        Node<T> p =rot, q=null; //q skal være forelder til p
-
-       while(p !=null){
-           int cmp = comp.compare(verdi,p.verdi); //sammenligner
-           if(cmp<0){
-               q=p; p=p.venstre; //venstre
-           }else if(cmp>0){
-               q=p; p=p.høyre;//høyre
-           }
-           else break; //verdien ligger i p
-       }
-
-       if(p==null) return false; //finner ikke verdi
-
-        if(p.venstre ==null || p.høyre == null){
-            Node<T> b=p.venstre !=null ? p.venstre : p.høyre; //b er barnet//hvis noden har 0 eller 1 barn
-            if(p==rot){
-                rot=b;
-            } else if (p==q.venstre){
-                q.venstre = b;
-                if(b !=null){
-                    b.forelder =q;
-                }
-            }
-            else{
-                q.høyre =b;
-            if(b !=null){
-                b.forelder =q;
-            }
-            }
-        }
-        else  {
-            Node<T> s=p, r = p.høyre;
-
-            while(r.venstre !=null){
-                s=r;
-                r=r.venstre;
-            }
-
-            p.verdi = r.verdi;
-
-            if(s != p){
-                s.venstre =r.høyre;
-            }else {
-                s.høyre = r.høyre;
-            }
-            if(r.høyre !=null){
-                r.høyre.forelder =s;
-            }
-
-
-        }
-
-        antall--;
-        endringer++;
-        return true;
-
+        throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public int fjernAlle(T verdi) {
-         if(tom()){
-             return 0;
-         }
-
-         int verdiAntall=0;
-
-         while(fjern(verdi)){
-             verdiAntall++;
-         }
-         return verdiAntall;
+        throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
+    //Oppgave 6
 
+//Oppgave 2
     public int antall(T verdi) {
         Node<T> p = rot;
         int antValue = 0;
@@ -198,7 +135,7 @@ public class SBinTre<T> {
         }
         return antValue;
     }
-
+//oppgave 2
     public void nullstill() {
         if(antall==0){
             return;
@@ -224,7 +161,7 @@ public class SBinTre<T> {
         }
 
     }
-
+    //Oppgave 3
     private static <T> Node<T> førstePostorden(Node<T> p) {
         Objects.requireNonNull(p);
         while(true){
@@ -237,6 +174,7 @@ public class SBinTre<T> {
             }
         }
     }
+
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
         Node<T> f = p.forelder; //Initialiserer f som p.forelder.
@@ -251,7 +189,9 @@ public class SBinTre<T> {
 
 
     }
+    //Oppgave 3
 
+//Oppgave 4
     public void postorden(Oppgave<? super T> oppgave) {
         Node<T> p = rot;
         Node<T> først = førstePostorden(p);
@@ -279,7 +219,9 @@ public class SBinTre<T> {
         postordenRecursive(p.høyre,oppgave);
         oppgave.utførOppgave(p.verdi);
     }
+//Oppgave 4
 
+    //Oppgave 5
     public ArrayList<T> serialize() {
         throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
@@ -287,6 +229,6 @@ public class SBinTre<T> {
     static <K> SBinTre<K> deserialize(ArrayList<K> data, Comparator<? super K> c) {
         throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
-
+    //Oppgave 5
 
 } // ObligSBinTre
